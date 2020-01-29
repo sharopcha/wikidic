@@ -12,6 +12,7 @@ const TermSchema = new Schema({
     },
     createdBy: {
         type: String,
+        required: true
     },
     term: {
         type: String,
