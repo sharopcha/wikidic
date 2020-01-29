@@ -1,0 +1,31 @@
+{
+  "name": "wikidic",
+  "version": "1.0.0",
+  "description": "An application like a wikipedia to search academic terms related to Law. ",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sharopcha/wikidic.git"
+  },
+  "author": "Azizmatov Sharofiddin, Abdurahimov Abdurasul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sharopcha/wikidic/issues"
+  },
+  "homepage": "https://github.com/sharopcha/wikidic#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.2.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.10"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.2"
+  }
+}
