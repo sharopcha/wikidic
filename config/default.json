@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb://Sharofiddin:Lutfiya1202@ds061797.mlab.com:61797/wikidic",
+    "jwtSecret": "secret"
+}
