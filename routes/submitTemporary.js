@@ -67,7 +67,21 @@ router.get('/', auth, async (req, res) => {
 	}
 });
 
-
+// @route    PUT api/suggestions
+// @desc     Approve a definition suggestion
+// @access   Private
+router.put('/:termid/:defid', auth, async (req, res) => {
+    try {
+        let def = await Temporary.findById(req.params.defid)
+        let term = await Term.findById(def.termID);
+        // console.log(def);
+        console.log(term);
+        // term.definition.push(def.definition);
+    } catch (error) {
+        console.error(error.message);
+		res.status(500).send('Server error');
+    }
+});
 
 
 

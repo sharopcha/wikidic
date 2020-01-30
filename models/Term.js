@@ -6,7 +6,7 @@ const TermSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users' 
     },
-    createdBy: {
+    created: {
         firstName: {
             type: String,
             required: true
@@ -30,8 +30,7 @@ const TermSchema = new Schema({
         }
     },
     definition: {
-        type: Array,
-        required: true,
+        type: Array
     },
     relatedWords: {
         type: Array,

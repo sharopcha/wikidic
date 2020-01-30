@@ -14,12 +14,9 @@ router.post(
 	[
 		auth,
 		[
-			check('term', 'A new term field cannot be empty')
+			check('term.term', 'A new term field cannot be empty')
 				.not()
-				.isEmpty(),
-            check('definition', 'You must provide at least one definition of the word').custom(array => {
-                return array.length > 0;
-            })
+				.isEmpty()
 		]
     ],
 	async (req, res) => {
@@ -29,23 +26,40 @@ router.post(
 			return res.status(400).json({ errors: errors.array() });
 		}
 
-		const { createdBy, term, approved, definition, relatedWords } = req.body;
+		const { created, term, definition, relatedWords } = req.body;
 
 		try {
-			const newTerm = new Term({
-                createdBy,
-                term,
-                definition,
-                relatedWords,
-                approved,
-				approvedBy: req.user.id
+
+			// let test = await Term.findOne({ term: term });
+
+			// console.log('hello', test)
+
+			// if(test) {
+			// 	return res.status(400)
+			// 		.json({ msg: 'The term already exists. If you have other definition for this term, please send a new suggesstion' })
+			// }
+
+			newTerm = new Term({
+				approvedBy: req.user.id,
+				created: {
+					firstName: created.firstName,
+					lastName: created.lastName,
+					email: created.email
+				},
+				term: {
+					approved: term.approved,
+					term: term.term
+				},
+				definition,
+				relatedWords
+
 			});
 
-			const created = await newTerm.save();
+			const returnTerm = await newTerm.save();
 
-			res.json(created);
+			res.json(returnTerm);
 		} catch (err) {
-			console.error(err.message);
+			console.error(err);
 			res.status(500).send('Server Error');
 		}
     }
@@ -97,14 +111,14 @@ router.put('/:id', auth, async (req, res) => {
 	if (!errors.isEmpty())
 		return res.status(400).json({ errors: errors.array() });
 
-	const { term, definition, relatedWords, createdBy, approvedBy, approved } = req.body;
+	const { term, definition, relatedWords, created, approvedBy, approved } = req.body;
 
 	// Build term object
 	const termField = {};
 	if (term) termField.term = term;
 	if (definition) termField.definition = definition;
 	if (relatedWords) termField.relatedWords = relatedWords;
-    if (createdBy) termField.createdBy = createdBy;
+    if (created) termField.created = created;
     if (approvedBy) termField.approvedBy = approvedBy;
     if (approved) termField.approved = approved;
 
