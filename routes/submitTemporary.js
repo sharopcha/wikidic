@@ -70,20 +70,48 @@ router.get('/', auth, async (req, res) => {
 // @route    PUT api/suggestions
 // @desc     Approve a definition suggestion
 // @access   Private
-router.put('/:termid/:defid', auth, async (req, res) => {
+router.put('/:defid', auth, async (req, res) => {
     try {
         let def = await Temporary.findById(req.params.defid)
-        let term = await Term.findById(def.termID);
-        // console.log(def);
-        console.log(term);
-        // term.definition.push(def.definition);
+        // let term = await Term.findById(def.termID);
+        console.log(def);
+        // console.log(term);
+
+        let approvedDef = {
+            title: def.definition,
+            createdBy: def.createdBy,
+            approved: true
+        }
+
+        await Term.updateOne(
+            { _id: def.termID },
+            { $push: { definition: approvedDef } }
+        );
+
+        await Temporary.findByIdAndDelete(def._id);
+
+        res.status(200).json({ msg: 'done' });
     } catch (error) {
         console.error(error.message);
 		res.status(500).send('Server error');
     }
 });
 
+// @route    DELETE api/suggestions
+// @desc     Disapprove a definition suggestion
+// @access   Private
+router.put('/:defid', auth, async (req, res) => {
+    try {
+        let def = await Temporary.findById(req.params.defid)
 
+        await Temporary.findByIdAndDelete(def._id);
+
+        res.status(200).json({ msg: 'done' });
+    } catch (error) {
+        console.error(error.message);
+		res.status(500).send('Server error');
+    }
+});
 
 
 
