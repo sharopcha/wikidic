@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const TermSchema = new Schema({
-    approvedBy: {
-        type: Schema.Types.ObjectId,
-        ref: 'users' 
-    },
+const TemporarySchema = new Schema({
     createdBy: {
         firstName: {
             type: String,
@@ -20,22 +16,14 @@ const TermSchema = new Schema({
             required: true
         }  
     },
-    term: {
-        approved: {
-            type: Boolean
-        },
-        term: {
-            type: String,
-            required: true
-        }
+    termID: {
+        type: String,
+        required: true
     },
     definition: {
-        type: Array,
+        type: String,
         required: true,
     },
-    relatedWords: {
-        type: Array,
-    }
 });
 
-module.exports = mongoose.model('term', TermSchema);
+module.exports = mongoose.model('temporary', TemporarySchema);

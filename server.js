@@ -13,6 +13,7 @@ app.use(express.json({ extended: false }));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/reg', require('./routes/user'));
 app.use('/api/terms', require('./routes/term'));
+app.use('/api/suggest', require('./routes/submitTemporary'));
 
 
 const PORT = process.env.PORT || 4000;
