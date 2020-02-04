@@ -1,0 +1,129 @@
+body {
+  font-size: 0.9rem;
+  /* box-sizing: border-box; */
+  font-family: "Roboto", sans-serif;
+}
+
+/* .main-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 99vw;
+  height: 70px;
+  align-items: center;
+  margin: auto auto;
+  background: #014e62;
+  border: 1px solid gray;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.header {
+  padding-left: 20px;
+  color: white;
+  text-align: center;
+}
+
+#header-link {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  margin: auto auto;
+}
+
+.wrapper::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* .words {
+  flex: 1;
+  padding-top: 10px;
+  font-size: 1.1rem;
+} */
+
+/* .word {
+  flex: 4;
+  padding-left: 10px;
+  font-size: 1.2rem;
+  padding-right: 10px;
+}
+
+#definition,
+#related {
+  font-size: 1.1rem;
+}
+
+.far {
+  cursor: pointer;
+}
+
+.fa-edit {
+  position: absolute;
+  top: 15vh;
+  right: 7vw;
+}
+
+.fa-trash-alt {
+  position: absolute;
+  top: 15vh;
+  right: 4.5vw;
+}
+*/
+
+/* My styles */
+.word-list {
+  height: 30rem;
+  overflow-y: scroll;
+}
+li:hover {
+  cursor: pointer;
+  color: #014e62;
+  background: #f2f2f2;
+}
+
+.fas {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.fa-trash-alt:hover {
+  color: red;
+}
+
+.fa-edit:hover {
+  color: #28a745;
+}
+
+.definition {
+  width: 80%;
+  border: none;
+  text-align: left;
+  padding: 10px;
+}
+
+.definition:hover {
+  border: 1px solid #28a745;
+  border-radius: 15px;
+}
+
+.badge {
+  /* max-width:   7rem; */
+  width: auto;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  border: 0.5 px solid #28a745;
+  border-radius: 6px;
+  transition: ease-in;
+}
+/* --------- */
