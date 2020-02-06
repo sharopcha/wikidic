@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import WordContext from "../context/word/wordContext";
 
 export default function WordList() {
+  const wordContext = useContext(WordContext);
+
+  const { words, filtered, getWords, loading } = wordContext;
+
+  useEffect(() => {
+    getWords();
+  });
+
   return (
     <div className="words mx-3 pt-3">
       <div className="">
@@ -22,46 +31,18 @@ export default function WordList() {
 
       <div className="mt-2  word-list">
         <ul className="list-group">
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
-          <li className="list-group-item text-left">Lorem, ipsum.</li>
+          {words !== null && words.length !== 0 && !loading
+            ? words.map(word => {
+                return (
+                  <li className="list-group-item text-left">
+                    {word.term.term}
+                  </li>
+                );
+              })
+            : "No words are added"}
+          {/* {words.map(word => {
+            console.log(word);
+          })} */}
         </ul>
       </div>
     </div>

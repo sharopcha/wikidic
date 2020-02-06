@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import WordState from "./context/word/wordState";
+
 import Navbar from "./components/Navbar";
 import WordList from "./components/WordList";
 import Word from "./components/Word";
@@ -7,7 +9,7 @@ import "./App.css";
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <WordState>
         <Navbar />
         <div className="container mt-1">
           <div className="row">
@@ -19,7 +21,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </WordState>
     );
   }
 }
