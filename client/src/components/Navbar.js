@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import AddNewWord from "./AddNewWord";
 
 const Navbar = () => {
   const [modal, setModal] = useState(false);
@@ -28,7 +27,7 @@ const Navbar = () => {
       </nav>
 
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Add new word</ModalHeader>
+        <ModalHeader>Add new word</ModalHeader>
         <ModalBody>
           <div className="form-group">
             <input
