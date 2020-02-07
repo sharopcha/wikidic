@@ -1,14 +1,38 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef, Fragment } from "react";
 import WordContext from "../context/word/wordContext";
 
 export default function WordList() {
   const wordContext = useContext(WordContext);
+  const text = useRef("");
 
-  const { words, filtered, getWords, loading } = wordContext;
+  const {
+    words,
+    filtered,
+    filterWords,
+    clearFilter,
+    getWords,
+    loading
+  } = wordContext;
 
   useEffect(() => {
     getWords();
-  });
+    if (words !== null && words.length === 0 && !loading) {
+      return <h5>No Words Added Yet!</h5>;
+    }
+    if (filtered === null) {
+      text.current.value === "";
+    }
+
+    console.log(filtered);
+  }, []);
+
+  const onChange = e => {
+    if (text.current.value !== "") {
+      filterWords(e.target.value);
+    } else {
+      clearFilter();
+    }
+  };
 
   return (
     <div className="words mx-3 pt-3">
@@ -16,6 +40,8 @@ export default function WordList() {
         <div className="form-group">
           <div className="input-group">
             <input
+              ref={text}
+              onChange={onChange}
               type="text"
               placeholder="Search..."
               className="form-control"
@@ -31,18 +57,27 @@ export default function WordList() {
 
       <div className="mt-2  word-list">
         <ul className="list-group">
-          {words !== null && words.length !== 0 && !loading
-            ? words.map(word => {
-                return (
-                  <li className="list-group-item text-left">
-                    {word.term.term}
-                  </li>
-                );
-              })
-            : "No words are added"}
-          {/* {words.map(word => {
-            console.log(word);
-          })} */}
+          {words !== null && !loading ? (
+            <Fragment>
+              {filtered !== null
+                ? filtered.map(word => {
+                    return (
+                      <li key={word._id} className="list-group-item text-left">
+                        {word.term.term}
+                      </li>
+                    );
+                  })
+                : words.map(word => {
+                    return (
+                      <li key={word._id} className="list-group-item text-left">
+                        {word.term.term}
+                      </li>
+                    );
+                  })}
+            </Fragment>
+          ) : (
+            <h5>Please Add new words...</h5>
+          )}
         </ul>
       </div>
     </div>

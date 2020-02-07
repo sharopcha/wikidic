@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import WordContext from "./wordContext";
 import wordReducer from "./wordReducer";
-import { GET_WORDS, WORD_ERROR } from "../types";
+import { GET_WORDS, WORD_ERROR, FILTER_WORDS, CLEAR_FILTER } from "../types";
 
 const WordState = props => {
   const initialState = {
@@ -32,6 +32,16 @@ const WordState = props => {
     }
   };
 
+  // Filter Words
+  const filterWords = text => {
+    dispatch({ type: FILTER_WORDS, payload: text });
+  };
+
+  // Clear Filter
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
+
   return (
     <WordContext.Provider
       value={{
@@ -40,7 +50,9 @@ const WordState = props => {
         filtered: state.filtered,
         model: state.model,
         error: state.error,
-        getWords
+        getWords,
+        filterWords,
+        clearFilter
       }}
     >
       {props.children}
