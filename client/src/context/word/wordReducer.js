@@ -21,7 +21,7 @@ export default (state, action) => {
         filtered: state.words.filter(word => {
           const regex = new RegExp(`${action.payload}`, "gi");
           console.log();
-          return word.term.term.match(regex);
+          return word.term.match(regex);
         })
       };
 
