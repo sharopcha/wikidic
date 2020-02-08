@@ -2,7 +2,13 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import WordContext from "./wordContext";
 import wordReducer from "./wordReducer";
-import { GET_WORDS, WORD_ERROR, FILTER_WORDS, CLEAR_FILTER } from "../types";
+import {
+  GET_WORDS,
+  WORD_ERROR,
+  FILTER_WORDS,
+  CLEAR_FILTER,
+  SET_CURRENT
+} from "../types";
 
 const WordState = props => {
   const initialState = {
@@ -19,17 +25,25 @@ const WordState = props => {
   const getWords = async () => {
     try {
       const res = await axios.get("/api/terms");
-
       dispatch({
         type: GET_WORDS,
         payload: res.data
       });
-    } catch (err) {
       dispatch({
-        type: WORD_ERROR,
-        payload: err.response.msg
+        type: SET_CURRENT,
+        payload: res.data[0]
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: WORD_ERROR
       });
     }
+  };
+
+  // Set Current Definition
+  const setCurrent = word => {
+    dispatch({ type: SET_CURRENT, payload: word });
   };
 
   // Filter Words
@@ -51,6 +65,7 @@ const WordState = props => {
         model: state.model,
         error: state.error,
         getWords,
+        setCurrent,
         filterWords,
         clearFilter
       }}

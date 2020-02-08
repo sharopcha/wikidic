@@ -1,4 +1,4 @@
-import { GET_WORDS, FILTER_WORDS, CLEAR_FILTER } from "../types";
+import { GET_WORDS, FILTER_WORDS, CLEAR_FILTER, SET_CURRENT } from "../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -7,6 +7,12 @@ export default (state, action) => {
         ...state,
         words: action.payload,
         loading: false
+      };
+
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: action.payload
       };
 
     case FILTER_WORDS:

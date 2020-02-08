@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, Fragment } from "react";
 import WordContext from "../context/word/wordContext";
+import WordListItem from "./WordListItem";
 
 export default function WordList() {
   const wordContext = useContext(WordContext);
@@ -11,6 +12,7 @@ export default function WordList() {
     filterWords,
     clearFilter,
     getWords,
+    setCurrent,
     loading
   } = wordContext;
 
@@ -22,8 +24,7 @@ export default function WordList() {
     if (filtered === null) {
       text.current.value === "";
     }
-
-    console.log(filtered);
+    // eslin-disable-next-line
   }, []);
 
   const onChange = e => {
@@ -61,18 +62,10 @@ export default function WordList() {
             <Fragment>
               {filtered !== null
                 ? filtered.map(word => {
-                    return (
-                      <li key={word._id} className="list-group-item text-left">
-                        {word.term.term}
-                      </li>
-                    );
+                    return <WordListItem key={word._id} word={word} />;
                   })
                 : words.map(word => {
-                    return (
-                      <li key={word._id} className="list-group-item text-left">
-                        {word.term.term}
-                      </li>
-                    );
+                    return <WordListItem key={word._id} word={word} />;
                   })}
             </Fragment>
           ) : (

@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AddNewDefinition from "./AddNewDefinition";
+import wordContext from "../context/word/wordContext";
 
 export default function Word() {
   const [modal, setModal] = useState(false);
+  const [currentWord, setCurrentWord] = useState(null);
+  const WordContext = useContext(wordContext);
+  const { current } = WordContext;
+
+  useEffect(() => {
+    if (current !== null) {
+      setCurrentWord(current);
+    }
+  });
+
+  // const { term, definition, relatedwords } = current;
 
   const toggle = () => setModal(!modal);
 
@@ -10,7 +22,10 @@ export default function Word() {
     <div className="pt-3">
       <div className="card p-3">
         <div className="card-body row">
-          <h4 className="card-title ml-3">Thi is the definition</h4>
+          {currentWord && (
+            <h4 className="card-title ml-3">{currentWord.term.term}</h4>
+          )}
+
           {/* TO DO 
             Need to be inplemented when user authenticated
           */}
@@ -24,22 +39,18 @@ export default function Word() {
           <i className="fas fa-trash-alt   mr-3"></i> */}
         </div>
         <AddNewDefinition modal={modal} />
-        <div className="definition ml-5 mb-3">
-          <div className="card-body">
-            <div className="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Inventore, saepe maxime facere rerum provident facilis.
-            </div>
-          </div>
-        </div>
-        <div className="definition ml-5 mb-3">
-          <div className="card-body">
-            <div className="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Inventore, saepe maxime facere rerum provident facilis.
-            </div>
-          </div>
-        </div>
+
+        {/* -------------------DEFINITION SECTION--------------------------------------- */}
+        {currentWord &&
+          currentWord.definition.map(def => {
+            return (
+              <div className="definition ml-5 mb-3">
+                <div className="card-body">
+                  <div className="card-text">{def.title}</div>
+                </div>
+              </div>
+            );
+          })}
         <p className="text-center mb-1">Related words:</p>
         <div className="text-left ml-5">
           <span className="badge badge-secondary mr-1 p-2">Consectetur.</span>
