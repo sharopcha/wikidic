@@ -51,13 +51,15 @@ export default function Word() {
               </div>
             );
           })}
+
         <p className="text-center mb-1">Related words:</p>
         <div className="text-left ml-5">
-          <span className="badge badge-secondary mr-1 p-2">Consectetur.</span>
-          <span className="badge badge-secondary mr-1 p-2">Consectetur.</span>
-          <span className="badge badge-secondary mr-1 p-2">
-            Consectetsaourmur.
-          </span>
+          {currentWord &&
+            currentWord.relatedWords.map(word => {
+              return (
+                <span className="badge badge-secondary mr-1 p-2">{word}</span>
+              );
+            })}
         </div>
       </div>
     </div>
