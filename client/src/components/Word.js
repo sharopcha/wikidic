@@ -1,22 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import AddNewDefinition from "./AddNewDefinition";
+import ModalForm from "./ModalForm";
 import wordContext from "../context/word/wordContext";
 
 export default function Word() {
-  const [modal, setModal] = useState(false);
   const [currentWord, setCurrentWord] = useState(null);
   const WordContext = useContext(wordContext);
-  const { current } = WordContext;
+  const { current, modal, openModal } = WordContext;
 
   useEffect(() => {
     if (current !== null) {
       setCurrentWord(current);
     }
   });
-
-  // const { term, definition, relatedwords } = current;
-
-  const toggle = () => setModal(!modal);
 
   return (
     <div className="pt-3">
@@ -30,7 +25,7 @@ export default function Word() {
             Need to be inplemented when user authenticated
           */}
           <a
-            onClick={toggle}
+            onClick={() => openModal("Definition")}
             className="btn btn-outline-success text-right ml-auto"
           >
             New definition
@@ -38,7 +33,7 @@ export default function Word() {
           {/* <i className="fas fa-edit text-right ml-auto mr-3"></i>
           <i className="fas fa-trash-alt   mr-3"></i> */}
         </div>
-        <AddNewDefinition modal={modal} />
+        <ModalForm />
 
         {/* -------------------DEFINITION SECTION--------------------------------------- */}
         {currentWord &&

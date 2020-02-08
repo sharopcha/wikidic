@@ -1,11 +1,20 @@
-import { GET_WORDS, FILTER_WORDS, CLEAR_FILTER, SET_CURRENT } from "../types";
+import {
+  GET_WORDS,
+  FILTER_WORDS,
+  CLEAR_FILTER,
+  SET_CURRENT,
+  OPEN_MODAL,
+  CLOSE_MODAL
+} from "../types";
 
 export default (state, action) => {
   switch (action.type) {
     case GET_WORDS:
       return {
         ...state,
-        words: action.payload,
+        words: action.payload.filter(word => {
+          return word.approved === true;
+        }),
         loading: false
       };
 
@@ -29,6 +38,20 @@ export default (state, action) => {
       return {
         ...state,
         filtered: null
+      };
+
+    case OPEN_MODAL:
+      return {
+        ...state,
+        modal: {
+          isOpen: true,
+          dest: action.payload
+        }
+      };
+    case CLOSE_MODAL:
+      return {
+        ...state,
+        modal: false
       };
   }
 };

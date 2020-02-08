@@ -1,10 +1,12 @@
-import React, { useState, Fragment } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import React, { useState, Fragment, useContext } from "react";
+import wordContext from "../context/word/wordContext";
+
+import ModalForm from "./ModalForm";
 
 const Navbar = () => {
-  const [modal, setModal] = useState(false);
-
-  const toggle = () => setModal(!modal);
+  // const [modal, setModal] = useState(false);
+  const WordContext = useContext(wordContext);
+  const { modal, openModal, closeModal } = WordContext;
 
   return (
     <Fragment>
@@ -12,7 +14,7 @@ const Navbar = () => {
         <a className="navbar-brand" href="#">
           LT | Course Glossary
         </a>
-        <a onClick={toggle} className="nav-link">
+        <a onClick={() => openModal("Navbar")} className="nav-link">
           Add new Word
         </a>
         <button
@@ -26,44 +28,14 @@ const Navbar = () => {
         </button>
       </nav>
 
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader>Add new word</ModalHeader>
-        <ModalBody>
-          <div className="form-group">
-            <input
-              type="text"
-              name="word"
-              className="form-control mb-2"
-              placeholder="New word..."
-            />
-            <textarea
-              name="definition"
-              placeholder="Definition goes here..."
-              cols="30"
-              rows="3"
-              className="form-control mb-3"
-            ></textarea>
-            <div className="dropdown-divider mb-3"></div>
-            <input
-              type="text"
-              name="name"
-              className="form-control mb-2"
-              placeholder="Your name"
-            />
-            <input
-              type="email"
-              name="email"
-              className="form-control "
-              placeholder="Your email"
-            />
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Submit
-          </Button>
-        </ModalFooter>
-      </Modal>
+      {/* For adding new words we need field. 
+        They are:
+          Modal Header,
+          New Term Input,
+          Submit Button type
+      */}
+      <ModalForm />
+      {/* ------------- ADD NEW WORD MODAL FORM ------------------------------------------ */}
     </Fragment>
   );
 };

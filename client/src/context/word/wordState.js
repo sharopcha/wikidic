@@ -7,7 +7,9 @@ import {
   WORD_ERROR,
   FILTER_WORDS,
   CLEAR_FILTER,
-  SET_CURRENT
+  SET_CURRENT,
+  OPEN_MODAL,
+  CLOSE_MODAL
 } from "../types";
 
 const WordState = props => {
@@ -15,7 +17,10 @@ const WordState = props => {
     words: null,
     current: null,
     filtered: null,
-    model: false,
+    modal: {
+      isOpen: false,
+      dest: null
+    },
     error: null
   };
 
@@ -56,18 +61,30 @@ const WordState = props => {
     dispatch({ type: CLEAR_FILTER });
   };
 
+  // Open Modal Form
+  const openModal = dest => {
+    dispatch({ type: OPEN_MODAL, payload: dest });
+  };
+
+  // Close Modal Form
+  const closeModal = () => {
+    dispatch({ type: CLOSE_MODAL });
+  };
+
   return (
     <WordContext.Provider
       value={{
         words: state.words,
         current: state.current,
         filtered: state.filtered,
-        model: state.model,
+        modal: state.modal,
         error: state.error,
         getWords,
         setCurrent,
         filterWords,
-        clearFilter
+        clearFilter,
+        openModal,
+        closeModal
       }}
     >
       {props.children}
