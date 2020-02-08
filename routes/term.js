@@ -41,14 +41,15 @@ router.post(
     } = req.body;
 
     try {
-      // let test = await Term.findOne({ term: term });
+      Term.findOne({ term }, (err, word) => {
+        if (err) {
+          res.status(500).send("Server Error");
+        }
 
-      // console.log('hello', test)
-
-      // if(test) {
-      // 	return res.status(400)
-      // 		.json({ msg: 'The term already exists. If you have other definition for this term, please send a new suggesstion' })
-      // }
+        if (word) {
+          return res.status(409).json({ msg: "The term already exists." });
+        }
+      });
 
       newTerm = new Term({
         created: {

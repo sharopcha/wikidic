@@ -15,12 +15,6 @@ router.post(
     check("definition", "A definition field cannot be empty")
       .not()
       .isEmpty()
-    // check('createdBy', 'All the fields must be filled')
-    //     .custom(obj => {
-    //         if(obj.firstName && obj.lastName && obj.email === ''){
-    //             console.log('error occured')
-    //         }
-    //     })
   ],
 
   async (req, res) => {
@@ -86,6 +80,16 @@ router.post(
     } = req.body;
 
     try {
+      Term.findOne({ term }, (err, word) => {
+        if (err) {
+          res.status(500).send("Server Error");
+        }
+
+        if (word) {
+          return res.status(409).json({ msg: "The term already exists." });
+        }
+      });
+
       newTerm = new Term({
         created: {
           firstName,
