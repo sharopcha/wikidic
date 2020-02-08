@@ -11,7 +11,7 @@ export default function WordListItem({ word }) {
       onClick={() => setCurrent(word)}
       className="list-group-item text-left"
     >
-      {word.term.term}
+      {word.term}
     </li>
   );
 }

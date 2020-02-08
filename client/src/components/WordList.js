@@ -12,7 +12,6 @@ export default function WordList() {
     filterWords,
     clearFilter,
     getWords,
-    setCurrent,
     loading
   } = wordContext;
 
