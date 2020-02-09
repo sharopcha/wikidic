@@ -60,12 +60,12 @@ export default function ModalForm() {
         console.log("all the fields must be filled");
         closeModal();
       } else {
-        const newterm = {
+        const newTerm = {
           createdBy: newterm.definition.createdBy,
           termID: current._id,
           definition: title
         };
-        addNewDefinition(newterm);
+        addNewDefinition(newTerm);
       }
     }
 

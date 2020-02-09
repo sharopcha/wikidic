@@ -5,32 +5,36 @@ import wordContext from "../context/word/wordContext";
 export default function Word() {
   const [currentWord, setCurrentWord] = useState(null);
   const WordContext = useContext(wordContext);
-  const { current, modal, openModal } = WordContext;
+  const { current, words, openModal } = WordContext;
 
   useEffect(() => {
     if (current !== null) {
-      setCurrentWord(current);
+      setCurrentWord(words[0]);
     }
   });
   return (
     <div className="pt-3">
       <div className="card p-3">
         <div className="card-body row">
-          {currentWord && (
+          {currentWord ? (
             <h4 className="card-title ml-3">{currentWord.term}</h4>
+          ) : (
+            <h5>Add new words and their definition...</h5>
           )}
 
           {/* TO DO 
             Need to be inplemented when user authenticated
           */}
-          <a
-            onClick={() => {
-              if (currentWord._id !== null) openModal("Definition");
-            }}
-            className="btn btn-outline-success text-right ml-auto"
-          >
-            New definition
-          </a>
+          {currentWord && (
+            <a
+              onClick={() => {
+                if (currentWord._id !== null) openModal("Definition");
+              }}
+              className="btn btn-outline-success text-right ml-auto"
+            >
+              New definition
+            </a>
+          )}
           {/* <i className="fas fa-edit text-right ml-auto mr-3"></i>
           <i className="fas fa-trash-alt   mr-3"></i> */}
         </div>

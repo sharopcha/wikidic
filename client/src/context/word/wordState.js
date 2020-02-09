@@ -37,10 +37,6 @@ const WordState = props => {
         type: GET_WORDS,
         payload: res.data
       });
-      dispatch({
-        type: SET_CURRENT,
-        payload: res.data[0]
-      });
     } catch (err) {
       console.log(err);
       dispatch({

@@ -72,5 +72,8 @@ export default (state, action) => {
           dest: ""
         }
       };
+
+    default:
+      return state;
   }
 };

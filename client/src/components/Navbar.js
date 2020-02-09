@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import wordContext from "../context/word/wordContext";
 
 import ModalForm from "./ModalForm";
@@ -6,7 +6,7 @@ import ModalForm from "./ModalForm";
 const Navbar = () => {
   // const [modal, setModal] = useState(false);
   const WordContext = useContext(wordContext);
-  const { modal, openModal, closeModal } = WordContext;
+  const { openModal } = WordContext;
 
   return (
     <Fragment>
