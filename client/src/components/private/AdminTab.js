@@ -1,24 +1,18 @@
-import React, { useState } from "react";
-import {
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Card,
-  Button,
-  CardTitle,
-  CardText,
-  Row,
-  Col
-} from "reactstrap";
+import React, { useState, useContext, useEffect } from "react";
+import { TabContent, TabPane, Nav, NavItem, NavLink, Badge } from "reactstrap";
 import classnames from "classnames";
+
+import WordContext from "../../context/word/wordContext";
 
 import Word from "../Word";
 import SuggestedDefinitions from "./SuggestedDefinitions";
 
 const AdminTab = props => {
   const [activeTab, setActiveTab] = useState("2");
+
+  const wordContext = useContext(WordContext);
+
+  const { suggestDefs } = wordContext;
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -46,6 +40,11 @@ const AdminTab = props => {
             }}
           >
             Suggessted Definitions
+            {suggestDefs !== null && (
+              <Badge color="danger" className="ml-2">
+                {suggestDefs.length}
+              </Badge>
+            )}
           </NavLink>
         </NavItem>
 
