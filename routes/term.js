@@ -17,10 +17,7 @@ router.post(
       check("term", "A new term field cannot be empty")
         .not()
         .isEmpty(),
-      check("created.firstName", "Please fill your credentials")
-        .not()
-        .isEmpty(),
-      check("created.lastName", "Please fill your credentials")
+      check("created.name", "Please fill your credentials")
         .not()
         .isEmpty(),
       check("created.email", "Please fill your credentials").isEmail()
@@ -33,7 +30,7 @@ router.post(
     }
 
     const {
-      created: { firstName, lastName, email },
+      created: { name, email },
       term,
       approved,
       definition
@@ -52,8 +49,7 @@ router.post(
 
       newTerm = new Term({
         created: {
-          firstName,
-          lastName,
+          name,
           email
         },
         term,
@@ -117,14 +113,22 @@ router.put("/:id", auth, async (req, res) => {
   if (!errors.isEmpty())
     return res.status(400).json({ errors: errors.array() });
 
-  const { term, definition, created, approved } = req.body;
+  const {
+    term,
+    definition,
+    created: { name, email },
+    approved
+  } = req.body;
 
   // Build term object
   const termField = {};
   if (term) termField.term = term;
   if (definition) termField.definition = definition;
-  if (created) termField.created = created;
-  if (approved) termField.approved = approved;
+  termField.created = {};
+  const { created } = termField;
+  if (name) created.name = name;
+  if (email) created.email = email;
+  if (approved !== null) termField.approved = approved;
 
   try {
     let term = await Term.findById(req.params.id);

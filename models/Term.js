@@ -3,11 +3,7 @@ const Schema = mongoose.Schema;
 
 const TermSchema = new Schema({
   created: {
-    firstName: {
-      type: String,
-      required: true
-    },
-    lastName: {
+    name: {
       type: String,
       required: true
     },

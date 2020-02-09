@@ -14,7 +14,11 @@ router.post(
   [
     check("definition", "A definition field cannot be empty")
       .not()
-      .isEmpty()
+      .isEmpty(),
+    check("createdBy.name", "The name field cannot be empty")
+      .not()
+      .isEmpty(),
+    check("createdBy.email", "Please enter your valid eamil").isEmail()
   ],
 
   async (req, res) => {
@@ -23,17 +27,21 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { termID, definition, createdBy } = req.body;
-    const { firstName, lastName, email } = createdBy;
+    const {
+      termID,
+      term,
+      definition,
+      createdBy: { name, email }
+    } = req.body;
 
     try {
       const tempTerm = new Temporary({
         createdBy: {
-          firstName,
-          lastName,
+          name,
           email
         },
         termID,
+        term,
         definition
       });
 
@@ -61,10 +69,7 @@ router.post(
       check("term", "A new term field cannot be empty")
         .not()
         .isEmpty(),
-      check("created.firstName", "Please fill your credentials")
-        .not()
-        .isEmpty(),
-      check("created.lastName", "Please fill your credentials")
+      check("created.name", "Please fill your credentials")
         .not()
         .isEmpty(),
       check("created.email", "Please fill your credentials").isEmail()
@@ -77,7 +82,7 @@ router.post(
     }
 
     const {
-      created: { firstName, lastName, email },
+      created: { name, email },
       term,
       definition
     } = req.body;
@@ -95,8 +100,7 @@ router.post(
 
       newTerm = new Term({
         created: {
-          firstName,
-          lastName,
+          name,
           email
         },
         term,
@@ -133,7 +137,7 @@ router.put("/:defid", auth, async (req, res) => {
   try {
     let def = await Temporary.findById(req.params.defid);
     // let term = await Term.findById(def.termID);
-    console.log(def);
+    // console.log(def);
     // console.log(term);
 
     let approvedDef = {
