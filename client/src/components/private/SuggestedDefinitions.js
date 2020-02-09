@@ -23,10 +23,29 @@ export default function SuggestedDefinitions() {
         <Collapse isOpen={activeTab === 1}>
           <Card>
             <CardBody>
-              1 Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
+              <div className="d-flex">
+                <ul className="list-group ml-aouto">
+                  <div className="list-group-item border-0 p-1">
+                    <p>
+                      <i className="fas fa-user mr-3"></i>
+                      Azizmatov Sharofiddin
+                    </p>
+                  </div>
+                  <div className="list-group-item border-0 p-1">
+                    <p>
+                      <i className="fas fa-at mr-3"></i>
+                      sharopcha1202@gmail.com
+                    </p>
+                  </div>
+                </ul>
+                <i className="fas fa-trash-alt ml-auto mr-2"></i>
+              </div>
+              <p className="p-2">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Accusantium saepe, rem tempore, nisi quis distinctio et fugiat
+                repellat error consequuntur libero aliquam porro perferendis.
+                Atque, et! Harum libero unde modi.
+              </p>
             </CardBody>
           </Card>
         </Collapse>
