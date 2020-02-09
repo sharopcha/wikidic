@@ -4,7 +4,8 @@ import {
   CLEAR_FILTER,
   SET_CURRENT,
   OPEN_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  ADD_NEW_DEFINITION
 } from "../types";
 
 export default (state, action) => {
@@ -17,6 +18,13 @@ export default (state, action) => {
         }),
         loading: false
       };
+
+    case ADD_NEW_DEFINITION: {
+      return {
+        ...state,
+        notification: action.payload
+      };
+    }
 
     case SET_CURRENT:
       return {
@@ -51,7 +59,10 @@ export default (state, action) => {
     case CLOSE_MODAL:
       return {
         ...state,
-        modal: false
+        modal: {
+          isOpen: false,
+          dest: ""
+        }
       };
   }
 };

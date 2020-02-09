@@ -9,7 +9,8 @@ import {
   CLEAR_FILTER,
   SET_CURRENT,
   OPEN_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  ADD_NEW_DEFINITION
 } from "../types";
 
 const WordState = props => {
@@ -19,8 +20,9 @@ const WordState = props => {
     filtered: null,
     modal: {
       isOpen: false,
-      dest: null
+      dest: ""
     },
+    notification: null,
     error: null
   };
 
@@ -42,6 +44,25 @@ const WordState = props => {
       console.log(err);
       dispatch({
         type: WORD_ERROR
+      });
+    }
+  };
+
+  // Add New Definition
+  const addNewDefinition = async newterm => {
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    try {
+      const res = await axios.post("/api/suggest/definition", newterm, config);
+
+      dispatch({
+        type: ADD_NEW_DEFINITION,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
       });
     }
   };
@@ -75,11 +96,13 @@ const WordState = props => {
     <WordContext.Provider
       value={{
         words: state.words,
+        notification: state.notification,
         current: state.current,
         filtered: state.filtered,
         modal: state.modal,
         error: state.error,
         getWords,
+        addNewDefinition,
         setCurrent,
         filterWords,
         clearFilter,

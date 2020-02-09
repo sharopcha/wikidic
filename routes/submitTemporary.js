@@ -37,9 +37,13 @@ router.post(
         definition
       });
 
-      const created = await tempTerm.save();
+      await tempTerm.save();
 
-      res.json(created);
+      res
+        .status(200)
+        .send(
+          "Your definition successfully created. Please wait untill admin of this site approve your definition!"
+        );
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");

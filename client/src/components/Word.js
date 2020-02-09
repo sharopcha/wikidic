@@ -12,7 +12,6 @@ export default function Word() {
       setCurrentWord(current);
     }
   });
-
   return (
     <div className="pt-3">
       <div className="card p-3">
@@ -25,7 +24,9 @@ export default function Word() {
             Need to be inplemented when user authenticated
           */}
           <a
-            onClick={() => openModal("Definition")}
+            onClick={() => {
+              if (currentWord._id !== null) openModal("Definition");
+            }}
             className="btn btn-outline-success text-right ml-auto"
           >
             New definition

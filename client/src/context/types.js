@@ -1,6 +1,7 @@
 export const GET_WORDS = "GET_WORDS";
 export const ADD_WORD = "ADD_WORD";
 export const DELETE_WORD = "DELETE_WORD";
+export const ADD_NEW_DEFINITION = "ADD_NEW_DEFINITION";
 export const SET_CURRENT = "SET_CURRENT";
 export const CLEAR_CURRENT = "CLEAR_CURRENT";
 export const UPDATE_WORD = "UPDATE_WORD";
