@@ -36,8 +36,7 @@ router.post(
       created: { firstName, lastName, email },
       term,
       approved,
-      definition,
-      relatedWords
+      definition
     } = req.body;
 
     try {
@@ -59,8 +58,7 @@ router.post(
         },
         term,
         approved,
-        definition,
-        relatedWords
+        definition
       });
 
       const returnTerm = await newTerm.save();
@@ -119,13 +117,12 @@ router.put("/:id", auth, async (req, res) => {
   if (!errors.isEmpty())
     return res.status(400).json({ errors: errors.array() });
 
-  const { term, definition, relatedWords, created, approved } = req.body;
+  const { term, definition, created, approved } = req.body;
 
   // Build term object
   const termField = {};
   if (term) termField.term = term;
   if (definition) termField.definition = definition;
-  if (relatedWords) termField.relatedWords = relatedWords;
   if (created) termField.created = created;
   if (approved) termField.approved = approved;
 

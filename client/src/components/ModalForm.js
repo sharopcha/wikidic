@@ -10,41 +10,79 @@ export default function ModalForm() {
     closeModal,
     openModal,
     addNewDefinition,
+    suggestNewWord,
     current
   } = WordContext;
+
   const [word, setWord] = useState({
     term: "",
     definition: "",
-    synonm: "",
     name: "",
     email: ""
   });
-
-  const { term, definition, synonm, email, name } = word;
 
   const onChange = e => {
     setWord({ ...word, [e.target.name]: e.target.value });
   };
 
+  const { term, definition, email, name } = word;
+
   const onSubmit = e => {
     e.preventDefault();
-    let related = synonm.split(" ");
+
     let fullName = name.split(" ");
 
     const newterm = {
-      definition,
-      createdBy: {
+      term,
+      definition: {
+        title: definition,
+        createdBy: {
+          lastName: fullName[0],
+          firstName: fullName[1],
+          email
+        }
+      },
+      created: {
         lastName: fullName[0],
         firstName: fullName[1],
         email
       }
     };
 
-    if (modal.dest == "Definition") {
-      newterm.termID = current._id;
-      addNewDefinition(newterm);
+    if (modal.dest === "Definition") {
+      const {
+        definition: {
+          title,
+          createdBy: { lastName, firstName, email }
+        }
+      } = newterm;
+      if (!title || !lastName || !firstName || !email) {
+        console.log("all the fields must be filled");
+        closeModal();
+      } else {
+        const newterm = {
+          createdBy: newterm.definition.createdBy,
+          termID: current._id,
+          definition: title
+        };
+        addNewDefinition(newterm);
+      }
     }
 
+    if (modal.dest === "Navbar") {
+      const {
+        term,
+        definition: { title },
+        created: { lastName, firstName, email }
+      } = newterm;
+      if (!title || !lastName || !firstName || !email || !term) {
+        console.log("all the fields must be filled");
+        closeModal();
+      } else {
+        suggestNewWord(newterm);
+        // console.log(newterm);
+      }
+    }
     closeModal();
   };
 
@@ -59,11 +97,11 @@ export default function ModalForm() {
   return (
     <Modal isOpen={modal.isOpen} toggle={toggle}>
       <ModalHeader>
-        {modal.dest == "Navbar" ? "ADD NEW WORD" : "ADD NEW DEFINITION"}
+        {modal.dest === "Navbar" ? "ADD NEW WORD" : "ADD NEW DEFINITION"}
       </ModalHeader>
       <ModalBody>
         <div className="form-group">
-          {modal.dest == "Navbar" && (
+          {modal.dest === "Navbar" && (
             <input
               onChange={onChange}
               type="text"
@@ -81,18 +119,6 @@ export default function ModalForm() {
             rows="3"
             className="form-control mb-3"
           ></textarea>
-          {modal.des == "Navbar" && (
-            <textarea
-              onChange={onChange}
-              type="text"
-              name="synonm"
-              placeholder="Related words..."
-              cols="20"
-              rows="2"
-              className="form-control mb-3"
-            ></textarea>
-          )}
-
           <div className="dropdown-divider mb-3"></div>
           <input
             onChange={onChange}

@@ -10,7 +10,8 @@ import {
   SET_CURRENT,
   OPEN_MODAL,
   CLOSE_MODAL,
-  ADD_NEW_DEFINITION
+  ADD_NEW_DEFINITION,
+  ADD_WORD
 } from "../types";
 
 const WordState = props => {
@@ -67,6 +68,27 @@ const WordState = props => {
     }
   };
 
+  // Add New Word Suggestion
+  const suggestNewWord = async newterm => {
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    console.log(newterm);
+
+    try {
+      const res = await axios.post("/api/suggest/newterm", newterm, config);
+      console.log(res.data);
+      dispatch({
+        type: ADD_WORD,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
   // Set Current Definition
   const setCurrent = word => {
     dispatch({ type: SET_CURRENT, payload: word });
@@ -103,6 +125,7 @@ const WordState = props => {
         error: state.error,
         getWords,
         addNewDefinition,
+        suggestNewWord,
         setCurrent,
         filterWords,
         clearFilter,

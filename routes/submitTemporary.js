@@ -79,8 +79,7 @@ router.post(
     const {
       created: { firstName, lastName, email },
       term,
-      definition,
-      relatedWords
+      definition
     } = req.body;
 
     try {
@@ -101,8 +100,7 @@ router.post(
           email
         },
         term,
-        definition,
-        relatedWords
+        definition
       });
 
       const returnTerm = await newTerm.save();
@@ -116,7 +114,7 @@ router.post(
 );
 
 // @route    GET api/suggestions
-// @desc     Get all suggestions
+// @desc     Get all suggestion
 // @access   Private
 router.get("/", auth, async (req, res) => {
   try {

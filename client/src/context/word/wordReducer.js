@@ -5,7 +5,8 @@ import {
   SET_CURRENT,
   OPEN_MODAL,
   CLOSE_MODAL,
-  ADD_NEW_DEFINITION
+  ADD_NEW_DEFINITION,
+  ADD_WORD
 } from "../types";
 
 export default (state, action) => {
@@ -25,6 +26,13 @@ export default (state, action) => {
         notification: action.payload
       };
     }
+
+    case ADD_WORD:
+      return {
+        ...state,
+        words: [...action.payload, ...state.words],
+        loading: false
+      };
 
     case SET_CURRENT:
       return {

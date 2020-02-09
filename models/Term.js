@@ -23,9 +23,6 @@ const TermSchema = new Schema({
   definition: {
     type: Array
   },
-  relatedWords: {
-    type: Array
-  },
   approved: {
     type: Boolean,
     default: false
