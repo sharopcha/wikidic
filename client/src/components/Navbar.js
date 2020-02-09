@@ -1,12 +1,21 @@
-import React, { Fragment, useContext } from "react";
-import wordContext from "../context/word/wordContext";
+import React, { Fragment, useContext, useEffect } from "react";
+import WordContext from "../context/word/wordContext";
+import AuthContext from "../context/auth/authContext";
 
 import ModalForm from "./ModalForm";
 
 const Navbar = () => {
   // const [modal, setModal] = useState(false);
-  const WordContext = useContext(wordContext);
-  const { openModal } = WordContext;
+  const wordContext = useContext(WordContext);
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, loadUser, logout } = authContext;
+  const { openModal } = wordContext;
+
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Fragment>
@@ -17,23 +26,18 @@ const Navbar = () => {
         <a onClick={() => openModal("Navbar")} className="nav-link">
           Add new Word
         </a>
-        <button
-          className="btn btn-outline-success mx-2 my-sm-0 ml-auto"
-          type="submit"
-        >
-          Login
-        </button>
-        <button className="btn btn-outline-success mx-2 my-sm-0 " type="submit">
-          Logout
-        </button>
+
+        {isAuthenticated && (
+          <button
+            className="btn btn-outline-success mx-2 ml-auto my-sm-0 "
+            type="submit"
+            onClick={() => logout()}
+          >
+            Logout
+          </button>
+        )}
       </nav>
 
-      {/* For adding new words we need field. 
-        They are:
-          Modal Header,
-          New Term Input,
-          Submit Button type
-      */}
       <ModalForm />
       {/* ------------- ADD NEW WORD MODAL FORM ------------------------------------------ */}
     </Fragment>
