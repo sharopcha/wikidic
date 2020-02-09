@@ -1,29 +1,31 @@
-import React, { Component } from "react";
+import React, { Fragment } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import WordState from "./context/word/wordState";
+import AuthState from "./context/auth/authState";
 
 import Navbar from "./components/Navbar";
-import WordList from "./components/WordList";
-import Word from "./components/Word";
+import Home from "./components/pages/Home";
+import Login from "./components/pages/Login";
 import "./App.css";
 
-class App extends Component {
-  render() {
-    return (
+const App = () => {
+  return (
+    <AuthState>
       <WordState>
-        <Navbar />
-        <div className="container mt-1">
-          <div className="row">
-            <div className="col-5 ">
-              <WordList />
+        <Router>
+          <Fragment>
+            <Navbar />
+            <div className="container mt-1">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+              </Switch>
             </div>
-            <div className="col-7 ">
-              <Word />
-            </div>
-          </div>
-        </div>
+          </Fragment>
+        </Router>
       </WordState>
-    );
-  }
-}
+    </AuthState>
+  );
+};
 
 export default App;
