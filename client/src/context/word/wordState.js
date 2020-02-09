@@ -74,6 +74,27 @@ const WordState = props => {
 
     try {
       const res = await axios.post("/api/suggest/newterm", newterm, config);
+      // console.log(res.data);
+      dispatch({
+        type: ADD_WORD,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
+  // Add New Word (Only Users Can Do)
+  const addNewWord = async newterm => {
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    // console.log(newterm);
+
+    try {
+      const res = await axios.post("/api/terms", newterm, config);
       console.log(res.data);
       dispatch({
         type: ADD_WORD,
@@ -89,6 +110,7 @@ const WordState = props => {
 
   // Set Current Definition
   const setCurrent = word => {
+    console.log(<word></word>);
     dispatch({ type: SET_CURRENT, payload: word });
   };
 
@@ -145,6 +167,7 @@ const WordState = props => {
         error: state.error,
         getWords,
         addNewDefinition,
+        addNewWord,
         suggestNewWord,
         setCurrent,
         filterWords,

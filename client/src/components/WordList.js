@@ -63,9 +63,11 @@ export default function WordList() {
                 ? filtered.map(word => {
                     return <WordListItem key={word._id} word={word} />;
                   })
-                : words.map(word => {
-                    return <WordListItem key={word._id} word={word} />;
-                  })}
+                : words
+                    .filter(i => i.approved === true)
+                    .map(word => {
+                      return <WordListItem key={word._id} word={word} />;
+                    })}
             </Fragment>
           ) : (
             <h5>Please Add new words...</h5>

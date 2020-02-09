@@ -13,11 +13,11 @@ import {
 export default (state, action) => {
   switch (action.type) {
     case GET_WORDS:
+      const firstDef = action.payload.filter(i => i.approved === true);
       return {
         ...state,
-        words: action.payload.filter(word => {
-          return word.approved === true;
-        }),
+        words: action.payload,
+        current: firstDef[0],
         loading: false
       };
 
@@ -51,11 +51,13 @@ export default (state, action) => {
     case FILTER_WORDS:
       return {
         ...state,
-        filtered: state.words.filter(word => {
-          const regex = new RegExp(`${action.payload}`, "gi");
-          console.log();
-          return word.term.match(regex);
-        })
+        filtered: state.words
+          .filter(i => i.approved === true)
+          .filter(word => {
+            const regex = new RegExp(`${action.payload}`, "gi");
+            console.log();
+            return word.term.match(regex);
+          })
       };
 
     case CLEAR_FILTER:

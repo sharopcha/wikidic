@@ -1,18 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, Fragment } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-import wordContext from "../context/word/wordContext";
+import WordContext from "../context/word/wordContext";
+import AuthContext from "../context/auth/authContext";
 
 export default function ModalForm() {
-  const WordContext = useContext(wordContext);
+  const wordContext = useContext(WordContext);
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const {
     modal,
     closeModal,
     openModal,
     addNewDefinition,
+    addNewWord,
     suggestNewWord,
     current
-  } = WordContext;
+  } = wordContext;
 
   const [word, setWord] = useState({
     term: "",
@@ -30,21 +34,17 @@ export default function ModalForm() {
   const onSubmit = e => {
     e.preventDefault();
 
-    let fullName = name.split(" ");
-
     const newterm = {
       term,
       definition: {
         title: definition,
         createdBy: {
-          lastName: fullName[0],
-          firstName: fullName[1],
+          name,
           email
         }
       },
       created: {
-        lastName: fullName[0],
-        firstName: fullName[1],
+        name,
         email
       }
     };
@@ -53,15 +53,16 @@ export default function ModalForm() {
       const {
         definition: {
           title,
-          createdBy: { lastName, firstName, email }
+          createdBy: { name, email }
         }
       } = newterm;
-      if (!title || !lastName || !firstName || !email) {
+      if (!title || !name || !email) {
         console.log("all the fields must be filled");
         closeModal();
       } else {
         const newTerm = {
           createdBy: newterm.definition.createdBy,
+          term: current.term,
           termID: current._id,
           definition: title
         };
@@ -72,14 +73,27 @@ export default function ModalForm() {
     if (modal.dest === "Navbar") {
       const {
         term,
-        definition: { title },
-        created: { lastName, firstName, email }
+        definition: { title, createdBy },
+        created: { name, email }
       } = newterm;
-      if (!title || !lastName || !firstName || !email || !term) {
+      if (!title || !term) {
         console.log("all the fields must be filled");
-        closeModal();
       } else {
-        suggestNewWord(newterm);
+        if (user) {
+          newterm.approved = true;
+          newterm.created.name = user.name;
+          newterm.created.email = user.email;
+          addNewWord(newterm);
+        }
+        if (!name || !email) {
+          console.log("all the fields must be filled");
+        } else {
+          newterm.created.name = name;
+          newterm.created.email;
+          createdBy.name = name;
+          createdBy.email = email;
+          suggestNewWord(newterm);
+        }
         // console.log(newterm);
       }
     }
@@ -120,20 +134,24 @@ export default function ModalForm() {
             className="form-control mb-3"
           ></textarea>
           <div className="dropdown-divider mb-3"></div>
-          <input
-            onChange={onChange}
-            type="text"
-            name="name"
-            className="form-control mb-2"
-            placeholder="Your name"
-          />
-          <input
-            onChange={onChange}
-            type="email"
-            name="email"
-            className="form-control "
-            placeholder="Your email"
-          />
+          {!user && (
+            <Fragment>
+              <input
+                onChange={onChange}
+                type="text"
+                name="name"
+                className="form-control mb-2"
+                placeholder="Your name"
+              />
+              <input
+                onChange={onChange}
+                type="email"
+                name="email"
+                className="form-control "
+                placeholder="Your email"
+              />
+            </Fragment>
+          )}
         </div>
       </ModalBody>
       <ModalFooter>
