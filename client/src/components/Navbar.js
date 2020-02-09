@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <Fragment>
       <nav className="navbar navbar-expand-md navbar-light  bg-light">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           LT | Course Glossary
         </a>
         <a onClick={() => openModal("Navbar")} className="nav-link">

@@ -11,11 +11,13 @@ import {
   OPEN_MODAL,
   CLOSE_MODAL,
   ADD_NEW_DEFINITION,
-  ADD_WORD
+  ADD_WORD,
+  GET_DEFINITIONS
 } from "../types";
 
 const WordState = props => {
   const initialState = {
+    suggestDefs: null,
     words: null,
     current: null,
     filtered: null,
@@ -110,10 +112,32 @@ const WordState = props => {
     dispatch({ type: CLOSE_MODAL });
   };
 
+  // ---------------------------- SUGGSESSTION SECTION -------------------------------------//
+
+  // Get all Suggested Definitions
+  const getDefs = async () => {
+    // const config = { headers: { "Content-Type": "application/json" } };
+
+    try {
+      const res = await axios.get("/api/suggest");
+      // console.log(res.data);
+      dispatch({
+        type: GET_DEFINITIONS,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
   return (
     <WordContext.Provider
       value={{
         words: state.words,
+        suggestDefs: state.suggestDefs,
         notification: state.notification,
         current: state.current,
         filtered: state.filtered,
@@ -126,7 +150,8 @@ const WordState = props => {
         filterWords,
         clearFilter,
         openModal,
-        closeModal
+        closeModal,
+        getDefs
       }}
     >
       {props.children}

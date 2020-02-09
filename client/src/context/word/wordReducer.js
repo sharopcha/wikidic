@@ -6,7 +6,8 @@ import {
   OPEN_MODAL,
   CLOSE_MODAL,
   ADD_NEW_DEFINITION,
-  ADD_WORD
+  ADD_WORD,
+  GET_DEFINITIONS
 } from "../types";
 
 export default (state, action) => {
@@ -17,6 +18,13 @@ export default (state, action) => {
         words: action.payload.filter(word => {
           return word.approved === true;
         }),
+        loading: false
+      };
+
+    case GET_DEFINITIONS:
+      return {
+        ...state,
+        suggestDefs: action.payload,
         loading: false
       };
 
