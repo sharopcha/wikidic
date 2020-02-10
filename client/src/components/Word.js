@@ -1,11 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import ModalForm from "./ModalForm";
 import wordContext from "../context/word/wordContext";
+import AuthContext from "../context/auth/authContext";
 
 export default function Word() {
   // const [current, setCurrentWord] = useState(null);
   const WordContext = useContext(wordContext);
+  const authContext = useContext(AuthContext);
   const { current, getWords, openModal, deleteTerm } = WordContext;
+  const { user } = authContext;
 
   useEffect(() => {
     if (current !== null) {
@@ -40,10 +43,12 @@ export default function Word() {
               New definition
             </a>
           )}
-          <i
-            className="fas fa-trash-alt text-right ml-auto mr-3"
-            onClick={onDelete}
-          ></i>
+          {user && (
+            <i
+              className="fas fa-trash-alt text-right ml-auto mr-3"
+              onClick={onDelete}
+            ></i>
+          )}
         </div>
         <ModalForm />
 
