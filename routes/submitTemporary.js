@@ -117,7 +117,7 @@ router.post(
   }
 );
 
-// @route    GET api/suggestions
+// @route    GET api/suggest
 // @desc     Get all suggestion
 // @access   Private
 router.get("/", auth, async (req, res) => {
@@ -130,7 +130,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// @route    PUT api/suggestions
+// @route    PUT api/suggest
 // @desc     Approve a definition suggestion
 // @access   Private
 router.put("/:defid", auth, async (req, res) => {
@@ -160,7 +160,7 @@ router.put("/:defid", auth, async (req, res) => {
   }
 });
 
-// @route    DELETE api/suggestions
+// @route    DELETE api/suggest
 // @desc     Disapprove a definition suggestion
 // @access   Private
 router.put("/:defid", auth, async (req, res) => {

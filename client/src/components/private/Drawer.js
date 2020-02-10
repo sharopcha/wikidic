@@ -1,12 +1,21 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { ListGroup, ListGroupItem, Collapse, Card, CardBody } from "reactstrap";
+import WordContext from "../../context/word/wordContext";
 
 export default function Drawer({ word }) {
   const [activeTab, setActiveTab] = useState(0);
+  const wordContext = useContext(WordContext);
+
+  const { getDefs, deleteDefSuggestion } = wordContext;
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  // const onDelete = id => {
+  //   console.log(id);
+  //   deleteDefSuggestion(id);
+  // };
 
   return (
     <div>
@@ -42,7 +51,10 @@ export default function Drawer({ word }) {
                             </p>
                           </div>
                         </ul>
-                        <i className="fas fa-trash-alt ml-auto  mr-2"></i>
+                        <i
+                          className="fas fa-trash-alt ml-auto  mr-2"
+                          onClick={() => deleteDefSuggestion(def._id)}
+                        ></i>
                       </div>
                       <p className="p-2">{word && def.definition}</p>
                       <a className="btn btn-outline-success btn-sm float-right">

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Badge } from "reactstrap";
 import classnames from "classnames";
 
@@ -40,7 +40,7 @@ const AdminTab = props => {
             }}
           >
             Suggessted Definitions
-            {suggestDefs !== null && (
+            {suggestDefs !== null && suggestDefs.length > 0 && (
               <Badge color="danger" className="ml-2">
                 {suggestDefs.length}
               </Badge>

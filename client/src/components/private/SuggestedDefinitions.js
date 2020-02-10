@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, Fragment } from "react";
+import React, { useContext, useEffect } from "react";
 import Drawer from "./Drawer";
 
 import WordContext from "../../context/word/wordContext";

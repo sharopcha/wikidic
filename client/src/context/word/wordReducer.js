@@ -8,7 +8,8 @@ import {
   ADD_NEW_DEFINITION,
   ADD_WORD,
   GET_DEFINITIONS,
-  DELETE_WORD
+  DELETE_WORD,
+  DEL_SUGGEST
 } from "../types";
 
 export default (state, action) => {
@@ -68,6 +69,15 @@ export default (state, action) => {
         ...state,
         words: filtered,
         current: currentDef[0]
+      };
+
+    case DEL_SUGGEST:
+      const filteredDefs = state.suggestDefs.filter(
+        def => def._id !== action.payload
+      );
+      return {
+        ...state,
+        suggestDefs: filteredDefs
       };
 
     case CLEAR_FILTER:

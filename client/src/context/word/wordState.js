@@ -13,7 +13,8 @@ import {
   ADD_NEW_DEFINITION,
   ADD_WORD,
   GET_DEFINITIONS,
-  DELETE_WORD
+  DELETE_WORD,
+  DEL_SUGGEST
 } from "../types";
 
 const WordState = props => {
@@ -97,6 +98,22 @@ const WordState = props => {
       dispatch({
         type: ADD_WORD,
         payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
+  // Delete Suggested Definition
+  const deleteDefSuggestion = async id => {
+    try {
+      await axios.put(`/api/suggest/${id}`);
+      dispatch({
+        type: DEL_SUGGEST,
+        payload: id
       });
     } catch (error) {
       dispatch({
@@ -207,6 +224,7 @@ const WordState = props => {
         setCurrent,
         filterWords,
         deleteTerm,
+        deleteDefSuggestion,
         clearFilter,
         openModal,
         closeModal,
