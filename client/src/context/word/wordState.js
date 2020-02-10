@@ -12,7 +12,8 @@ import {
   CLOSE_MODAL,
   ADD_NEW_DEFINITION,
   ADD_WORD,
-  GET_DEFINITIONS
+  GET_DEFINITIONS,
+  DELETE_WORD
 } from "../types";
 
 const WordState = props => {
@@ -126,9 +127,24 @@ const WordState = props => {
     }
   };
 
+  // Delete The Term
+  const deleteTerm = async id => {
+    try {
+      await axios.delete(`/api/terms/${id}`);
+      dispatch({
+        type: DELETE_WORD,
+        payload: id
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
   // Set Current Definition
   const setCurrent = word => {
-    console.log(<word></word>);
     dispatch({ type: SET_CURRENT, payload: word });
   };
 
@@ -190,6 +206,7 @@ const WordState = props => {
         suggestNewWord,
         setCurrent,
         filterWords,
+        deleteTerm,
         clearFilter,
         openModal,
         closeModal,

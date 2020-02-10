@@ -7,7 +7,8 @@ import {
   CLOSE_MODAL,
   ADD_NEW_DEFINITION,
   ADD_WORD,
-  GET_DEFINITIONS
+  GET_DEFINITIONS,
+  DELETE_WORD
 } from "../types";
 
 export default (state, action) => {
@@ -58,6 +59,15 @@ export default (state, action) => {
             console.log();
             return word.term.match(regex);
           })
+      };
+
+    case DELETE_WORD:
+      const filtered = state.words.filter(word => word._id !== action.payload);
+      const currentDef = state.words.filter(i => i.approved === true);
+      return {
+        ...state,
+        words: filtered,
+        current: currentDef[0]
       };
 
     case CLEAR_FILTER:
