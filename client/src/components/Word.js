@@ -35,8 +35,7 @@ export default function Word() {
               New definition
             </a>
           )}
-          {/* <i className="fas fa-edit text-right ml-auto mr-3"></i>
-          <i className="fas fa-trash-alt   mr-3"></i> */}
+          <i className="fas fa-trash-alt text-right ml-auto  mr-3"></i>
         </div>
         <ModalForm />
 

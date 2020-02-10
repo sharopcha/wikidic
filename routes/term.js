@@ -105,50 +105,33 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
-// @route    PUT api/tems/:id
-// @desc     Update a Term
+// @route    PUT api/tems/definition
+// @desc     Update a Term's Definition and Add New Definition in It
 // @access   Private
-router.put("/:id", auth, async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty())
-    return res.status(400).json({ errors: errors.array() });
+router.put("/definition", auth, async (req, res) => {
+  const { createdBy, termID, definition } = req.body;
 
-  const {
-    term,
-    definition,
-    created: { name, email },
-    approved
-  } = req.body;
+  const newDefinition = {
+    createdBy: {
+      name: createdBy.name,
+      email: createdBy.email
+    },
+    title: definition,
+    approved: true
+  };
 
-  // Build term object
-  const termField = {};
-  if (term) termField.term = term;
-  if (definition) termField.definition = definition;
-  termField.created = {};
-  const { created } = termField;
-  if (name) created.name = name;
-  if (email) created.email = email;
-  if (approved !== null) termField.approved = approved;
+  console.log(newDefinition);
 
   try {
-    let term = await Term.findById(req.params.id);
-
-    if (!term) return res.status(404).json({ msg: "The term cannot be found" });
-
-    // Make sure user owns term
-    // if (term.approvedBy.toString() !== req.user.id)
-    //   return res.status(401).json({ msg: "Not authorized" });
-
-    term = await Term.findByIdAndUpdate(
-      req.params.id,
-      { $set: termField },
-      { new: true }
+    await Term.updateOne(
+      { _id: termID },
+      { $push: { definition: newDefinition } }
     );
 
-    res.json(term);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(200).json({ msg: "Your definition is added" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("something went wrong try letter");
   }
 });
 

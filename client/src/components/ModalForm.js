@@ -50,23 +50,30 @@ export default function ModalForm() {
     };
 
     if (modal.dest === "Definition") {
-      const {
-        definition: {
-          title,
-          createdBy: { name, email }
-        }
-      } = newterm;
-      if (!title || !name || !email) {
+      const newDefinition = {
+        createdBy: {
+          name,
+          email
+        },
+        definition: word.definition,
+        termID: current._id,
+        term: current.term
+      };
+
+      const { createdBy, definition } = newDefinition;
+
+      if (!definition) {
         console.log("all the fields must be filled");
         closeModal();
       } else {
-        const newTerm = {
-          createdBy: newterm.definition.createdBy,
-          term: current.term,
-          termID: current._id,
-          definition: title
-        };
-        addNewDefinition(newTerm);
+        if (user) {
+          createdBy.name = user.name;
+          createdBy.email = user.email;
+
+          // console.log(newDefinition);
+          addNewDefinition(newDefinition);
+          closeModal();
+        }
       }
     }
 

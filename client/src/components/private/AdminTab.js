@@ -8,7 +8,7 @@ import Word from "../Word";
 import SuggestedDefinitions from "./SuggestedDefinitions";
 
 const AdminTab = props => {
-  const [activeTab, setActiveTab] = useState("2");
+  const [activeTab, setActiveTab] = useState("1");
 
   const wordContext = useContext(WordContext);
 

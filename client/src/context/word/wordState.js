@@ -47,12 +47,30 @@ const WordState = props => {
     }
   };
 
-  // Add New Definition
-  const addNewDefinition = async newterm => {
+  // Add New Definition Suggestion
+  const addNewDefinitionSuggestion = async newterm => {
     const config = { headers: { "Content-Type": "application/json" } };
 
     try {
       const res = await axios.post("/api/suggest/definition", newterm, config);
+
+      dispatch({
+        type: ADD_NEW_DEFINITION,
+        payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
+  const addNewDefinition = async newterm => {
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    try {
+      const res = await axios.put("/api/terms/definition", newterm, config);
 
       dispatch({
         type: ADD_NEW_DEFINITION,
@@ -167,6 +185,7 @@ const WordState = props => {
         error: state.error,
         getWords,
         addNewDefinition,
+        addNewDefinitionSuggestion,
         addNewWord,
         suggestNewWord,
         setCurrent,

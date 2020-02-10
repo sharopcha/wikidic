@@ -16,8 +16,13 @@ export default function Drawer({ word }) {
             // console.log(def, i);
             return (
               <Fragment key={def._id}>
-                <ListGroupItem onClick={() => toggle(i)} tag="button" action>
-                  {word && def._id}
+                <ListGroupItem
+                  onClick={() => toggle(i)}
+                  tag="button"
+                  action
+                  className="font-weight-bold"
+                >
+                  {word && def.term}
                 </ListGroupItem>
                 <Collapse isOpen={activeTab === i}>
                   <Card>
@@ -27,7 +32,7 @@ export default function Drawer({ word }) {
                           <div className="list-group-item border-0 p-1">
                             <p>
                               <i className="fas fa-user mr-3"></i>
-                              {word && def.createdBy.firstName}
+                              {word && def.createdBy.name}
                             </p>
                           </div>
                           <div className="list-group-item border-0 p-1">
