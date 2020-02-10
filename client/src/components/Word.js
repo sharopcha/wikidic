@@ -5,13 +5,18 @@ import wordContext from "../context/word/wordContext";
 export default function Word() {
   // const [current, setCurrentWord] = useState(null);
   const WordContext = useContext(wordContext);
-  const { current, words, openModal, deleteTerm, setCurrent } = WordContext;
+  const { current, getWords, openModal, deleteTerm } = WordContext;
 
   useEffect(() => {
     if (current !== null) {
       // setCurrent();
     }
   });
+
+  const onDelete = () => {
+    deleteTerm(current._id);
+    getWords();
+  };
   return (
     <div className="pt-3">
       <div className="card p-3">
@@ -37,7 +42,7 @@ export default function Word() {
           )}
           <i
             className="fas fa-trash-alt text-right ml-auto mr-3"
-            onClick={() => deleteTerm(current._id)}
+            onClick={onDelete}
           ></i>
         </div>
         <ModalForm />

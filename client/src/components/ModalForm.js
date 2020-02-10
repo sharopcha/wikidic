@@ -13,9 +13,11 @@ export default function ModalForm() {
     closeModal,
     openModal,
     addNewDefinition,
+    addNewDefinitionSuggestion,
     addNewWord,
     suggestNewWord,
-    current
+    current,
+    getWords
   } = wordContext;
 
   const [word, setWord] = useState({
@@ -49,6 +51,8 @@ export default function ModalForm() {
       }
     };
 
+    // ---------------DEFINITION--------------------------------------//
+
     if (modal.dest === "Definition") {
       const newDefinition = {
         createdBy: {
@@ -72,10 +76,21 @@ export default function ModalForm() {
 
           // console.log(newDefinition);
           addNewDefinition(newDefinition);
+          getWords();
+          closeModal();
+        }
+
+        if (!createdBy.name || !createdBy.email) {
+          alert("all the fields must be filled");
+        } else {
+          addNewDefinitionSuggestion(newDefinition);
           closeModal();
         }
       }
     }
+    // -------------------------------------------------------------------------//
+
+    // ----------------NAVBAR---------------------------------------------------//
 
     if (modal.dest === "Navbar") {
       const {
@@ -104,8 +119,10 @@ export default function ModalForm() {
         // console.log(newterm);
       }
     }
+    getWords();
     closeModal();
   };
+  // --------------------------------------------------------------------//
 
   const toggle = () => {
     if (modal.isOpen) {
