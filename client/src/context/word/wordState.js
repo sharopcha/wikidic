@@ -51,16 +51,35 @@ const WordState = props => {
     }
   };
 
-  // Add New Definition Suggestion
-  const addNewDefinitionSuggestion = async newterm => {
-    const config = { headers: { "Content-Type": "application/json" } };
+  // Get all Suggested Definitions
+  const getDefs = async () => {
+    // const config = { headers: { "Content-Type": "application/json" } };
 
     try {
-      const res = await axios.post("/api/suggest/definition", newterm, config);
-
+      const res = await axios.get("/api/suggest");
+      // console.log(res.data);
       dispatch({
-        type: ADD_NEW_DEFINITION,
+        type: GET_DEFINITIONS,
         payload: res.data
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
+  // Get all Suggested Words
+  const getSuggestWords = async () => {
+    // const config = { headers: { "Content-Type": "application/json" } };
+
+    try {
+      const res = await axios.get("api/terms");
+      const filter = res.data.filter(word => word.approved === false);
+      dispatch({
+        type: GET_SUGGEST_WORDS,
+        payload: filter
       });
     } catch (error) {
       dispatch({
@@ -80,6 +99,7 @@ const WordState = props => {
         type: ADD_NEW_DEFINITION,
         payload: res.data
       });
+      getDefs();
     } catch (error) {
       dispatch({
         type: WORD_ERROR,
@@ -189,15 +209,15 @@ const WordState = props => {
 
   // ---------------------------- SUGGSESSTION SECTION -------------------------------------//
 
-  // Get all Suggested Definitions
-  const getDefs = async () => {
-    // const config = { headers: { "Content-Type": "application/json" } };
+  // Add New Definition Suggestion
+  const addNewDefinitionSuggestion = async newterm => {
+    const config = { headers: { "Content-Type": "application/json" } };
 
     try {
-      const res = await axios.get("/api/suggest");
-      // console.log(res.data);
+      const res = await axios.post("/api/suggest/definition", newterm, config);
+
       dispatch({
-        type: GET_DEFINITIONS,
+        type: ADD_NEW_DEFINITION,
         payload: res.data
       });
     } catch (error) {
@@ -223,17 +243,11 @@ const WordState = props => {
     }
   };
 
-  // Get all Suggested Words
-  const getSuggestWords = async () => {
-    // const config = { headers: { "Content-Type": "application/json" } };
-
+  // Approve New Definition
+  const approveDefinition = async id => {
     try {
-      const res = await axios.get("api/terms");
-      const filter = res.data.filter(word => word.approved === false);
-      dispatch({
-        type: GET_SUGGEST_WORDS,
-        payload: filter
-      });
+      await axios.put(`/api/suggest/${id}`);
+      getDefs();
     } catch (error) {
       dispatch({
         type: WORD_ERROR,
@@ -258,6 +272,7 @@ const WordState = props => {
         addNewDefinition,
         addNewDefinitionSuggestion,
         approveNewWord,
+        approveDefinition,
         addNewWord,
         suggestNewWord,
         setCurrent,

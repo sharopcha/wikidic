@@ -111,7 +111,7 @@ export default function ModalForm() {
           console.log("all the fields must be filled");
         } else {
           newterm.created.name = name;
-          newterm.created.email;
+          newterm.created.email = email;
           createdBy.name = name;
           createdBy.email = email;
           suggestNewWord(newterm);

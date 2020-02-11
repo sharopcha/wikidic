@@ -10,16 +10,16 @@ export default function SuggestedDefinitions() {
   useEffect(() => {
     getDefs();
 
-    if (suggestDefs === null) {
-      return <h5>There is no suggested definitions</h5>;
-    }
-
     // eslint-disable-next-line
   }, []);
 
   return (
     <div className="container mt-3">
-      {suggestDefs !== null && <Drawer word={suggestDefs} />}
+      {suggestDefs === null ? (
+        <h5>There is no suggested definitions</h5>
+      ) : (
+        <Drawer word={suggestDefs} />
+      )}
     </div>
   );
 }

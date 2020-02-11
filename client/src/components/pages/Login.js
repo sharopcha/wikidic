@@ -3,12 +3,14 @@ import AuthContext from "../../context/auth/authContext";
 
 export default function Login(props) {
   const authContext = useContext(AuthContext);
-  const { login, error, clearError, isAuthenticated } = authContext;
+  const { login, isAuthenticated } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
       props.history.push("/admin");
     }
+
+    // eslint-disable-next-line
   }, [isAuthenticated, props.history]);
 
   const [user, setUser] = useState({

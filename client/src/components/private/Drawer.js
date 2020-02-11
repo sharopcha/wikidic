@@ -6,7 +6,7 @@ export default function Drawer({ word }) {
   const [activeTab, setActiveTab] = useState(0);
   const wordContext = useContext(WordContext);
 
-  const { getDefs, deleteDefSuggestion } = wordContext;
+  const { deleteDefSuggestion, approveDefinition } = wordContext;
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -57,7 +57,10 @@ export default function Drawer({ word }) {
                         ></i>
                       </div>
                       <p className="p-2">{word && def.definition}</p>
-                      <a className="btn btn-outline-success btn-sm float-right">
+                      <a
+                        className="btn btn-outline-success btn-sm float-right"
+                        onClick={() => approveDefinition(def._id)}
+                      >
                         Approve
                       </a>
                     </CardBody>
