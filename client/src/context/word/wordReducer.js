@@ -1,6 +1,5 @@
 import {
   GET_WORDS,
-  GET_SUGGEST_WORDS,
   FILTER_WORDS,
   CLEAR_FILTER,
   SET_CURRENT,
@@ -16,7 +15,7 @@ import {
 export default (state, action) => {
   switch (action.type) {
     case GET_WORDS:
-      const firstDef = action.payload.filter(i => i.approved === true);
+      const firstDef = action.payload;
       return {
         ...state,
         words: action.payload,
@@ -28,13 +27,6 @@ export default (state, action) => {
       return {
         ...state,
         suggestDefs: action.payload,
-        loading: false
-      };
-
-    case GET_SUGGEST_WORDS:
-      return {
-        ...state,
-        suggestWords: action.payload,
         loading: false
       };
 

@@ -5,13 +5,13 @@ import WordContext from "../../context/word/wordContext";
 export default function SuggetedWordsDrawer({ words }) {
   const wordContext = useContext(WordContext);
   const [activeTab, setActiveTab] = useState(0);
-  const { deleteTerm, getSuggestWords, approveNewWord } = wordContext;
+  const { deleteTerm, getWords, approveNewWord } = wordContext;
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
   useEffect(() => {
-    getSuggestWords();
+    getWords();
   });
 
   return (

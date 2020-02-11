@@ -5,20 +5,25 @@ import SuggetedWordsDrawer from "./SuggetedWordsDrawer";
 
 export default function SuggestedWords() {
   const wordContext = useContext(WordContext);
-  const { getSuggestWords, suggestWords } = wordContext;
+  const { words, getWords } = wordContext;
 
   useEffect(() => {
-    getSuggestWords();
+    getWords();
 
     // eslint-disable-next-line
   }, []);
 
   return (
     <div className="container mt-3">
-      {suggestWords === null ? (
+      {words === null ? (
         <h5>There is no suggested definitions</h5>
       ) : (
-        <SuggetedWordsDrawer words={suggestWords} />
+        <SuggetedWordsDrawer
+          words={words.filter(i => {
+            let filtered;
+            return (filtered = i.approved === false);
+          })}
+        />
       )}
     </div>
   );

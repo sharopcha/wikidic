@@ -10,10 +10,8 @@ import SuggestedWords from "./SuggestedWords";
 
 const AdminTab = props => {
   const [activeTab, setActiveTab] = useState("1");
-
   const wordContext = useContext(WordContext);
-
-  const { suggestDefs, suggestWords } = wordContext;
+  const { suggestDefs, words } = wordContext;
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -57,11 +55,12 @@ const AdminTab = props => {
             }}
           >
             Suggessted New Words
-            {suggestWords !== null && suggestWords.length > 0 && (
-              <Badge color="danger" className="ml-2">
-                {suggestWords.length}
-              </Badge>
-            )}
+            {words !== null &&
+              words.filter(i => i.approved === false).length > 0 && (
+                <Badge color="danger" className="ml-2">
+                  {words.filter(i => i.approved === false).length}
+                </Badge>
+              )}
           </NavLink>
         </NavItem>
       </Nav>

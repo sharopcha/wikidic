@@ -1,6 +1,5 @@
 export const GET_WORDS = "GET_WORDS";
 export const GET_DEFINITIONS = "GET_DEFINITIONS";
-export const GET_SUGGEST_WORDS = "GET_SUGGEST_WORDS";
 export const ADD_WORD = "ADD_WORD";
 export const DELETE_WORD = "DELETE_WORD";
 export const DEL_SUGGEST = "DEL_SUGGEST";
