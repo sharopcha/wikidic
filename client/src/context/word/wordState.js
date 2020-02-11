@@ -208,6 +208,21 @@ const WordState = props => {
     }
   };
 
+  // Approve New Suggested Word
+  const approveNewWord = async id => {
+    console.log(id);
+    try {
+      await axios.put(`/api/terms/approve/${id}`);
+      // console.log(res.data);
+      getWords();
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
   // Get all Suggested Words
   const getSuggestWords = async () => {
     // const config = { headers: { "Content-Type": "application/json" } };
@@ -242,6 +257,7 @@ const WordState = props => {
         getSuggestWords,
         addNewDefinition,
         addNewDefinitionSuggestion,
+        approveNewWord,
         addNewWord,
         suggestNewWord,
         setCurrent,

@@ -13,7 +13,7 @@ const AdminTab = props => {
 
   const wordContext = useContext(WordContext);
 
-  const { suggestDefs } = wordContext;
+  const { suggestDefs, suggestWords } = wordContext;
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -57,6 +57,11 @@ const AdminTab = props => {
             }}
           >
             Suggessted New Words
+            {suggestWords !== null && suggestWords.length > 0 && (
+              <Badge color="danger" className="ml-2">
+                {suggestWords.length}
+              </Badge>
+            )}
           </NavLink>
         </NavItem>
       </Nav>

@@ -135,4 +135,36 @@ router.put("/definition", auth, async (req, res) => {
   }
 });
 
+// @route    PUT api/tems/approve/:id
+// @desc     Update a Term
+// @access   Private
+router.put("/approve/:id", auth, async (req, res) => {
+  const { approved } = req.body;
+
+  // Build term object
+  const termField = {};
+  termField.approved = true;
+
+  try {
+    let term = await Term.findById(req.params.id);
+
+    if (!term) return res.status(404).json({ msg: "The term cannot be found" });
+
+    // Make sure user owns term
+    // if (term.approvedBy.toString() !== req.user.id)
+    //   return res.status(401).json({ msg: "Not authorized" });
+
+    term = await Term.findByIdAndUpdate(
+      req.params.id,
+      { $set: termField },
+      { new: true }
+    );
+
+    res.json(term);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

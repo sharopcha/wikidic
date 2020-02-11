@@ -5,7 +5,7 @@ import WordContext from "../../context/word/wordContext";
 export default function SuggetedWordsDrawer({ words }) {
   const wordContext = useContext(WordContext);
   const [activeTab, setActiveTab] = useState(0);
-  const { deleteTerm, getSuggestWords } = wordContext;
+  const { deleteTerm, getSuggestWords, approveNewWord } = wordContext;
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
@@ -54,7 +54,10 @@ export default function SuggetedWordsDrawer({ words }) {
                         ></i>
                       </div>
                       <p className="p-2">{words && def.definition[0].title}</p>
-                      <a className="btn btn-outline-success btn-sm float-right">
+                      <a
+                        className="btn btn-outline-success btn-sm float-right"
+                        onClick={() => approveNewWord(def._id)}
+                      >
                         Approve
                       </a>
                     </CardBody>
