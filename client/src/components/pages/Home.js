@@ -15,11 +15,11 @@ export default function Home() {
   });
 
   return (
-    <div className="row">
+    <div>
       {user && isAuthenticated ? (
         <Redirect to="/admin" />
       ) : (
-        <div>
+        <div className="row">
           <div className="col-5">
             <WordList />
           </div>
