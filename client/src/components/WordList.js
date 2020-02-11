@@ -23,7 +23,7 @@ export default function WordList() {
     if (filtered === null) {
       text.current.value === "";
     }
-    // eslin-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const onChange = e => {
