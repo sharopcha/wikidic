@@ -4,6 +4,7 @@ import WordContext from "./wordContext";
 import wordReducer from "./wordReducer";
 import {
   GET_WORDS,
+  GET_SUGGEST_WORDS,
   WORD_ERROR,
   FILTER_WORDS,
   CLEAR_FILTER,
@@ -20,6 +21,7 @@ import {
 const WordState = props => {
   const initialState = {
     suggestDefs: null,
+    suggestWords: null,
     words: null,
     current: null,
     filtered: null,
@@ -206,17 +208,38 @@ const WordState = props => {
     }
   };
 
+  // Get all Suggested Words
+  const getSuggestWords = async () => {
+    // const config = { headers: { "Content-Type": "application/json" } };
+
+    try {
+      const res = await axios.get("api/terms");
+      const filter = res.data.filter(word => word.approved === false);
+      dispatch({
+        type: GET_SUGGEST_WORDS,
+        payload: filter
+      });
+    } catch (error) {
+      dispatch({
+        type: WORD_ERROR,
+        payload: error.response.msg
+      });
+    }
+  };
+
   return (
     <WordContext.Provider
       value={{
         words: state.words,
         suggestDefs: state.suggestDefs,
+        suggestWords: state.suggestWords,
         notification: state.notification,
         current: state.current,
         filtered: state.filtered,
         modal: state.modal,
         error: state.error,
         getWords,
+        getSuggestWords,
         addNewDefinition,
         addNewDefinitionSuggestion,
         addNewWord,

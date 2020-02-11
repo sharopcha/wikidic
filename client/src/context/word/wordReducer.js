@@ -1,5 +1,6 @@
 import {
   GET_WORDS,
+  GET_SUGGEST_WORDS,
   FILTER_WORDS,
   CLEAR_FILTER,
   SET_CURRENT,
@@ -27,6 +28,13 @@ export default (state, action) => {
       return {
         ...state,
         suggestDefs: action.payload,
+        loading: false
+      };
+
+    case GET_SUGGEST_WORDS:
+      return {
+        ...state,
+        suggestWords: action.payload,
         loading: false
       };
 

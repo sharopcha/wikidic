@@ -6,6 +6,7 @@ import WordContext from "../../context/word/wordContext";
 
 import Word from "../Word";
 import SuggestedDefinitions from "./SuggestedDefinitions";
+import SuggestedWords from "./SuggestedWords";
 
 const AdminTab = props => {
   const [activeTab, setActiveTab] = useState("1");
@@ -67,7 +68,9 @@ const AdminTab = props => {
         <TabPane tabId="2">
           <SuggestedDefinitions />
         </TabPane>
-        <TabPane tabId="3"></TabPane>
+        <TabPane tabId="3">
+          <SuggestedWords />
+        </TabPane>
       </TabContent>
     </div>
   );

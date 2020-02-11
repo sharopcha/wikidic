@@ -1,10 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import ModalForm from "./ModalForm";
 import wordContext from "../context/word/wordContext";
 import AuthContext from "../context/auth/authContext";
 
 export default function Word() {
-  // const [current, setCurrentWord] = useState(null);
   const WordContext = useContext(wordContext);
   const authContext = useContext(AuthContext);
   const { current, getWords, openModal, deleteTerm } = WordContext;
