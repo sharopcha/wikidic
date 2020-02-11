@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Badge } from "reactstrap";
 import classnames from "classnames";
 
@@ -11,11 +11,15 @@ import SuggestedWords from "./SuggestedWords";
 const AdminTab = props => {
   const [activeTab, setActiveTab] = useState("1");
   const wordContext = useContext(WordContext);
-  const { suggestDefs, words } = wordContext;
+  const { suggestDefs, words, getWords } = wordContext;
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  useEffect(() => {
+    getWords();
+  }, []);
 
   return (
     <div>

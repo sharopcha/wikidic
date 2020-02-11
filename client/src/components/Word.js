@@ -6,14 +6,14 @@ import AuthContext from "../context/auth/authContext";
 export default function Word() {
   const WordContext = useContext(wordContext);
   const authContext = useContext(AuthContext);
-  const { current, getWords, openModal, deleteTerm } = WordContext;
+  const { current, words, getWords, openModal, deleteTerm } = WordContext;
   const { user } = authContext;
 
   useEffect(() => {
-    if (current !== null) {
-      // setCurrent();
+    if (current === null) {
+      getWords();
     }
-  });
+  }, []);
 
   const onDelete = () => {
     deleteTerm(current._id);
@@ -23,12 +23,7 @@ export default function Word() {
     <div className="pt-3">
       <div className="card p-3">
         <div className="card-body row">
-          {current === null ? (
-            <h5>Add new words and their definition...</h5>
-          ) : (
-            <h4 className="card-title ml-3">{current.term}</h4>
-          )}
-
+          {/* {current !== null && current.term} */}
           {/* TO DO 
             Need to be inplemented when user authenticated
           */}
@@ -48,6 +43,7 @@ export default function Word() {
               onClick={onDelete}
             ></i>
           )}
+          {/* {current !== null && current.term} */}
         </div>
         <ModalForm />
 

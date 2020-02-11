@@ -34,28 +34,29 @@ router.post(
       createdBy: { name, email }
     } = req.body;
 
-    try {
-      const tempTerm = new Temporary({
-        createdBy: {
-          name,
-          email
-        },
-        termID,
-        term,
-        definition
-      });
+    console.log(definition);
+    //   try {
+    //     const tempTerm = new Temporary({
+    //       createdBy: {
+    //         name,
+    //         email
+    //       },
+    //       termID,
+    //       term,
+    //       definition
+    //     });
 
-      await tempTerm.save();
+    //     await tempTerm.save();
 
-      res
-        .status(200)
-        .send(
-          "Your definition successfully created. Please wait untill admin of this site approve your definition!"
-        );
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
+    //     res
+    //       .status(200)
+    //       .send(
+    //         "Your definition successfully created. Please wait untill admin of this site approve your definition!"
+    //       );
+    //   } catch (err) {
+    //     console.error(err.message);
+    //     res.status(500).send("Server Error");
+    //   }
   }
 );
 

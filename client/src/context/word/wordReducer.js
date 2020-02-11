@@ -8,6 +8,7 @@ import {
   ADD_NEW_DEFINITION,
   ADD_WORD,
   GET_DEFINITIONS,
+  GET_SUGGESTED_WORDS,
   DELETE_WORD,
   DEL_SUGGEST
 } from "../types";
@@ -15,11 +16,16 @@ import {
 export default (state, action) => {
   switch (action.type) {
     case GET_WORDS:
-      const firstDef = action.payload;
       return {
         ...state,
         words: action.payload,
-        current: firstDef[0],
+        loading: false
+      };
+
+    case GET_SUGGESTED_WORDS:
+      return {
+        ...state,
+        suggestWords: action.payload,
         loading: false
       };
 

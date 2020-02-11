@@ -1,18 +1,14 @@
-import React, { useState, useContext, useEffect, Fragment } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import { ListGroup, ListGroupItem, Collapse, Card, CardBody } from "reactstrap";
 import WordContext from "../../context/word/wordContext";
 
 export default function SuggetedWordsDrawer({ words }) {
   const wordContext = useContext(WordContext);
   const [activeTab, setActiveTab] = useState(0);
-  const { deleteTerm, getWords, approveNewWord } = wordContext;
+  const { deleteTerm, approveNewWord } = wordContext;
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-
-  useEffect(() => {
-    getWords();
-  });
 
   return (
     <div>

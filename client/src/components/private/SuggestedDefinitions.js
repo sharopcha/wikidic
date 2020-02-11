@@ -8,8 +8,7 @@ export default function SuggestedDefinitions() {
   const { getDefs, suggestDefs } = wordContext;
 
   useEffect(() => {
-    getDefs();
-
+    // getDefs();
     // eslint-disable-next-line
   }, []);
 

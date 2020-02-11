@@ -68,13 +68,34 @@ router.post(
 );
 
 // @route    GET api/terms
-// @desc     Get all terms
+// @desc     Get all approved terms
 // @access   Public
 router.get("/", async (req, res) => {
   try {
-    const terms = await Term.find().sort({
+    const response = await Term.find().sort({
       term: 1
     });
+    const terms = response.filter(i => i.approved === true);
+
+    // console.log(terms);
+    res.json(terms);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route    GET api/terms/suggested
+// @desc     Get all suggested terms
+// @access   Public
+router.get("/suggested", auth, async (req, res) => {
+  try {
+    const response = await Term.find().sort({
+      term: 1
+    });
+    const terms = response.filter(i => i.approved === false);
+
+    // console.log(terms);
     res.json(terms);
   } catch (err) {
     console.error(err.message);

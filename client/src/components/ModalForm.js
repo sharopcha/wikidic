@@ -74,18 +74,18 @@ export default function ModalForm() {
           createdBy.name = user.name;
           createdBy.email = user.email;
 
-          // console.log(newDefinition);
+          console.log(newDefinition.definition);
           addNewDefinition(newDefinition);
-          getWords();
+          // getWords();
           closeModal();
         }
 
-        if (!createdBy.name || !createdBy.email) {
-          alert("all the fields must be filled");
-        } else {
-          addNewDefinitionSuggestion(newDefinition);
-          closeModal();
-        }
+        // if (!createdBy.name || !createdBy.email) {
+        //   alert("all the fields must be filled");
+        // } else {
+        //   addNewDefinitionSuggestion(newDefinition);
+        //   closeModal();
+        // }
       }
     }
     // -------------------------------------------------------------------------//

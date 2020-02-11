@@ -3,31 +3,24 @@ import { Redirect } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 import WordList from "../WordList";
 import Word from "../Word";
+import ErrorBoundary from "../../utils/ErrorBoundary";
 
 export default function Home() {
   const authContext = useContext(AuthContext);
   const { user, isAuthenticated } = authContext;
 
-  useEffect(() => {
-    if (user && isAuthenticated) {
-      <Redirect to="/admin" />;
-    }
-  });
+  useEffect(() => {});
 
   return (
     <div className="row">
-      {user && isAuthenticated ? (
-        <Redirect to="/admin" />
-      ) : (
-        <div>
-          <div className="col-5">
-            <WordList />
-          </div>
-          <div className="col-7 ">
-            <Word />
-          </div>
-        </div>
-      )}
+      <div className="col-5">
+        <WordList />
+      </div>
+      <div className="col-7 ">
+        <ErrorBoundary>
+          <Word />
+        </ErrorBoundary>
+      </div>
     </div>
   );
 }

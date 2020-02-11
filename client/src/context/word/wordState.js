@@ -4,6 +4,7 @@ import WordContext from "./wordContext";
 import wordReducer from "./wordReducer";
 import {
   GET_WORDS,
+  GET_SUGGESTED_WORDS,
   WORD_ERROR,
   FILTER_WORDS,
   CLEAR_FILTER,
@@ -42,6 +43,7 @@ const WordState = props => {
         type: GET_WORDS,
         payload: res.data
       });
+      setCurrent(res.data[0]);
     } catch (err) {
       console.log(err);
       dispatch({
@@ -53,10 +55,9 @@ const WordState = props => {
   // Get all Suggested Definitions
   const getDefs = async () => {
     // const config = { headers: { "Content-Type": "application/json" } };
-
     try {
       const res = await axios.get("/api/suggest");
-      // console.log(res.data);
+      console.log(res.data[0]);
       dispatch({
         type: GET_DEFINITIONS,
         payload: res.data
@@ -65,6 +66,23 @@ const WordState = props => {
       dispatch({
         type: WORD_ERROR,
         payload: error.response.msg
+      });
+    }
+  };
+
+  // Get All Suggested Words
+  const getSuggestWords = async () => {
+    try {
+      const res = await axios.get("/api/terms/suggested");
+      dispatch({
+        type: GET_SUGGESTED_WORDS,
+        payload: res.data
+      });
+      setCurrent(res.data[0]);
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: WORD_ERROR
       });
     }
   };
@@ -214,7 +232,7 @@ const WordState = props => {
     try {
       await axios.put(`/api/terms/approve/${id}`);
       // console.log(res.data);
-      getWords();
+      // getWords();
     } catch (error) {
       dispatch({
         type: WORD_ERROR,
@@ -240,6 +258,7 @@ const WordState = props => {
     <WordContext.Provider
       value={{
         words: state.words,
+        suggestWords: state.suggestWords,
         suggestDefs: state.suggestDefs,
         notification: state.notification,
         current: state.current,
@@ -247,6 +266,7 @@ const WordState = props => {
         modal: state.modal,
         error: state.error,
         getWords,
+        getSuggestWords,
         addNewDefinition,
         addNewDefinitionSuggestion,
         approveNewWord,
