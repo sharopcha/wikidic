@@ -12,6 +12,7 @@ export default function Home() {
   useEffect(() => {});
 
   return (
+<<<<<<< HEAD
     <div className="row">
       <div className="col-5">
         <WordList />
@@ -21,6 +22,21 @@ export default function Home() {
           <Word />
         </ErrorBoundary>
       </div>
+=======
+    <div>
+      {user && isAuthenticated ? (
+        <Redirect to="/admin" />
+      ) : (
+        <div className="row">
+          <div className="col-5">
+            <WordList />
+          </div>
+          <div className="col-7 ">
+            <Word />
+          </div>
+        </div>
+      )}
+>>>>>>> c34d2ef
     </div>
   );
 }
