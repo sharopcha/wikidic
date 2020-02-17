@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react";
-import ModalForm from "./ModalForm";
-import wordContext from "../context/word/wordContext";
-import AuthContext from "../context/auth/authContext";
+import React, { useContext, useEffect } from 'react';
+import ModalForm from './ModalForm';
+import wordContext from '../context/word/wordContext';
+import AuthContext from '../context/auth/authContext';
 
 export default function Word() {
   const WordContext = useContext(wordContext);
@@ -20,26 +20,26 @@ export default function Word() {
     getWords();
   };
   return (
-    <div className="pt-3">
-      <div className="card p-3">
-        <div className="card-body row">
-          {/* {current !== null && current.term} */}
+    <div className='pt-3'>
+      <div className='card p-3'>
+        <div className='card-body row'>
+          {current !== null && current.term}
           {/* TO DO 
             Need to be inplemented when user authenticated
           */}
           {current && (
             <a
               onClick={() => {
-                if (current._id !== null) openModal("Definition");
+                if (current._id !== null) openModal('Definition');
               }}
-              className="btn btn-outline-success text-right ml-auto"
+              className='btn btn-outline-success text-right ml-auto'
             >
               New definition
             </a>
           )}
           {user && (
             <i
-              className="fas fa-trash-alt text-right ml-auto mr-3"
+              className='fas fa-trash-alt text-right ml-auto mr-3'
               onClick={onDelete}
             ></i>
           )}
@@ -51,9 +51,9 @@ export default function Word() {
         {current &&
           current.definition.map((def, i) => {
             return (
-              <div key={i} className="definition ml-5 mb-3">
-                <div className="card-body">
-                  <div className="card-text">{def.title}</div>
+              <div key={i} className='definition ml-5 mb-3'>
+                <div className='card-body'>
+                  <div className='card-text'>{def.title}</div>
                 </div>
               </div>
             );
